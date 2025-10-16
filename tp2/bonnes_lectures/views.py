@@ -18,7 +18,8 @@ def book_list(request):
 
 def book_detail(request, id):
     book = get_object_or_404(Book, id=id)
-    return render(request, 'book_detail.html', {'book': book})
+    reviews = book.reviews.order_by('-date')
+    return render(request, 'book_detail.html', {'book': book, 'reviews': reviews})
 
 def new_book(request):
     if request.method == 'POST':

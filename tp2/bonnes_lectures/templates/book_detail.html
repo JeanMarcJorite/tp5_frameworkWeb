@@ -25,5 +25,28 @@
             </div>
         </div>
     </div>
+            <div class="mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="h5 mb-0">Commentaires</h3>
+                    <a class="btn btn-primary btn-sm" href="{% url 'new_review' book.id %}">Ajouter un commentaire</a>
+                </div>
+
+                {% if reviews %}
+                    <div class="row">
+                        {% for review in reviews %}
+                            <div class="col-12 mb-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="mb-1">{{ review.content }}</p>
+                                        <div class="text-muted small">Le {{ review.date }} — Note : {{ review.rating }}/5</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">Pas encore de commentaires pour ce livre.</div>
+                {% endif %}
+            </div>
 </div>
 {% endblock %}
