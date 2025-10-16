@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book
-from .forms import BookForm
+import datetime
+from .models import Book, Review
+from .forms import BookForm, ReviewForm
 
 # Create your views here.
 def about(request):
@@ -48,4 +49,19 @@ def modify_book(request, id):
     return render(request, 'modify_book.html', {'form': form, 'book': book, "button_label": "Modifier"})
 
 
+def new_review(request,id):
+    book = get_object_or_404(Book, id=id)
 
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.book = book
+            review.save()
+            return redirect('book_detail', id=book.id)
+    else:
+            form = ReviewForm(initial={'date': datetime.date.today()})
+
+    return render(request, 'new_review.html', {"form": form, 'book': book})
+   
+   

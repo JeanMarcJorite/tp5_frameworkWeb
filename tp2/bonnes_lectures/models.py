@@ -10,3 +10,12 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+class Review(models.Model):
+    book = models.ForeignKey(Book, related_name='reviews', on_delete=models.CASCADE)
+    content = models.TextField()
+    date = models.DateField()
+    rating = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'Le commentaire du {self.date} pour {self.book.title} a une note de {self.rating}/5'

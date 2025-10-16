@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Ajouter un commentaire{% endblock %}
+{% block content %}
+<div class="mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Ajouter un commentaire{% if book %} pour "{{ book.title }}"{% endif %}</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                    <a href="{% if book %}{% url 'book_detail' book.id %}{% else %}{% url 'book_list' %}{% endif %}" class="btn btn-secondary btn-sm ms-2">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
