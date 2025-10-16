@@ -46,3 +46,6 @@ def modify_book(request, id):
     else:
         form = BookForm(instance=book)
     return render(request, 'modify_book.html', {'form': form, 'book': book, "button_label": "Modifier"})
+
+
+
