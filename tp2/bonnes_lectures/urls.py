@@ -12,5 +12,6 @@ urlpatterns = [
     path('book/modify/<int:id>/', views.modify_book, name='modify_books'),
     path('book/<int:id>/modify/', views.modify_book, name='modify_book'),
     path('book/<int:id>/addReview/', views.new_review, name='new_review'),
-  
+    path('book/<int:book_id>/editReview/<int:review_id>/', views.modify_review, name="modify_review"),
+    path('book/<int:book_id>/deleteReview/<int:review_id>/', views.delete_review, name="delete_review")
 ]

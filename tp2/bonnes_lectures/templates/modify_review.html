@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Modifier: {{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-3">Modifier le livre — {{ book.title }}</h1>
+
+    <form method="post" enctype="multipart/form-data" novalidate
+        {% if form.instance.pk %}
+            action="{% url 'modify_review' book.id form.instance.pk %}"
+        {% endif %}>
+        {% csrf_token %}
+
+        {# Affiche les erreurs non-field et du formulaire #}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {# Rendu Bootstrap du formulaire (utilise django-bootstrap5) #}
+        {% bootstrap_form form %}
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="{% url 'book_detail' book.id %}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

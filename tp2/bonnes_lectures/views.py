@@ -65,4 +65,26 @@ def new_review(request,id):
 
     return render(request, 'new_review.html', {"form": form, 'book': book})
    
-   
+def modify_review(request, book_id, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    book = review.book
+
+    if request.method == "POST":
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('book_detail', id=book.id)
+    else:
+        form = ReviewForm(instance=review, initial={'date': datetime.date.today()})
+
+    return render(request, 'modify_review.html', {"form": form, 'book': book})
+
+def delete_review(request, book_id, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.method == "POST":
+        review.delete()
+        return redirect("book_detail", id=book_id)
+    
+    return redirect("book_detail", id=book_id)
